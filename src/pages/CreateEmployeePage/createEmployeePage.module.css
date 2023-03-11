@@ -1,0 +1,11 @@
+main {
+    color: var(--primary-color);
+}
+.userIconContainer{
+    display: flex;
+    justify-content: space-around;
+}
+.userIcon{
+    width: 30px;
+    margin:20px;
+}

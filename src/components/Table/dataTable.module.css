@@ -1,0 +1,52 @@
+body {
+    font-family: 'open sans', sans-serif;
+    font-size: 16px;
+  }
+  
+  table {
+    margin-top: 10px;
+    margin-bottom: 10px;
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.9rem;
+  }
+  
+  thead th {
+    text-align: left;
+    border-bottom: 2px solid black;
+    background-color: #dcf2cc
+  }
+  
+  thead button {
+    border: 0;
+    border-radius: none;
+    font-family: inherit;
+    font-weight: 700;
+    font-size: 0.9rem;
+    padding: 0.5em;
+    margin-bottom: 1px;
+    cursor:pointer;
+    background-color: #dcf2cc;
+  }
+  
+  thead button.ascending::after {
+    content: '▼';
+    display: inline-block;
+    margin-left: 1em;
+  }
+  
+  thead button.descending::after {
+    content: '▲'; 
+    display: inline-block;
+    margin-left: 1em;
+  }
+  
+  tbody td {
+    padding: 0.5em;
+    border-bottom: 1px solid #ccc;
+  }
+  
+  tbody tr:hover {
+    background-color: #eee;
+  }
+  

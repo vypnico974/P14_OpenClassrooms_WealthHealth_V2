@@ -1,0 +1,131 @@
+.createForm{
+    display: flex;
+    flex-wrap: wrap;
+    /* gap: 0 20px; */
+}
+.informationsContainer, .adressContainer, .departmentContainer{
+    min-width: 270px;
+    width:33%;
+    padding:10px; 
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    justify-content: space-around;
+    align-items: center;
+}
+.informationsContainer__firstName, .informationsContainer__lastName,
+.informationsContainer__select, .informationsContainer__date{
+    margin-bottom: 20px;
+}
+
+.informationsContainer__date{
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    align-items: flex-start;
+
+}
+
+.informationsContainer__select .select{
+    background-color: #dcf2cc;
+    
+}
+
+.informationsContainer__select div{
+    border-radius: 0;
+}
+
+.adressContainer{
+    border: 2px solid #6c8312;
+    border-radius: 1rem;
+    margin-left: 5px;
+}
+.btnContainer{
+    display: flex;
+    justify-content: space-around;
+    margin-top:30px;
+}
+
+.btnContainer button {
+    font-size: 1rem;
+    font-weight: 300;
+    cursor: pointer;
+    color: #fff;
+    border-radius: 1rem;
+    border: none;
+    padding: 1rem 2rem;
+    margin: 2rem 0;
+    box-shadow: 0rem 0.2rem 0.5rem 0.1rem #d5d5d5;
+    /* background: #9356dc; */
+    background: linear-gradient(-10deg, #012611 25%, #6c8312 100%);
+}
+
+button:hover{
+  transform: scale(1.1);
+}
+
+/* .selectContainer:hover{
+    background-color: green;
+
+} */
+
+@media screen and (min-width: 964px) {
+    input{
+        width:300px;
+    }
+
+}
+@media screen and (min-width:465px) and (width < 864px){
+    input{
+        width:240px;
+    }
+
+}
+@media screen and (max-width: 550px) {
+    .createForm{
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+    .btnContainer{
+        margin-top:0;
+    }   
+}
+
+@media screen and (max-width: 514px) {
+    .informationsContainer, .adressContainer, .departmentContainer{
+        min-width: 230px;
+    }
+    input{
+        width:100%;
+    }
+    .informationsContainer__select .select{
+        font-size: 0.9rem;
+        
+    }
+}
+
+/* @media screen and (min-width: 1100px)  {
+    .informationsContainer__select{
+        width:70%;
+    }   
+} */
+
+
+/* @media screen and (min-width: 885px) and (width < 1100px) {
+    .informationsContainer__select{
+        width:90%;
+    }   
+}
+
+@media screen and (min-width: 700px) and (width < 885px) {
+    .informationsContainer__select{
+        width:90%;
+    }   
+}
+
+@media screen and (max-width: 699px) {
+    .informationsContainer__select{
+        width:100%;
+    }   
+} */
