@@ -1,6 +1,7 @@
 import { configureStore } from '@reduxjs/toolkit'
 import { employeeReducer} from './employee'
-import { persistStore, persistReducer, FLUSH, REHYDRATE, PAUSE, REGISTER, PERSIST, PURGE } from 'redux-persist'
+import { persistStore, persistReducer, FLUSH, REHYDRATE, PAUSE,
+         REGISTER, PERSIST, PURGE } from 'redux-persist'
 import storage from 'redux-persist/lib/storage'
 
 
@@ -10,7 +11,7 @@ const persistConfig = {
 }
 
 /**
- * We make the reducer persistent with the config
+ * Make the reducer persistent with the config
  */
 const persistedReducer = persistReducer(persistConfig, employeeReducer)
 

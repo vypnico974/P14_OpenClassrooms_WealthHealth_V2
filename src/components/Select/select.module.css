@@ -1,11 +1,17 @@
+/*
+* Prefixed by https://autoprefixer.github.io
+* PostCSS: v8.4.14,
+* Autoprefixer: v10.4.7
+* Browsers: last 4 version
+*/
+
 .selectContainer{
     background-color: #dcf2cc;
     width:100%;
     min-width: 220px;
+    cursor:pointer;
 }
-/* .labelContainer{
-    margin:10px;
-} */
+
 @media screen and (max-width: 514px) {
     .selectContainer{
         font-size: 0.9rem;        

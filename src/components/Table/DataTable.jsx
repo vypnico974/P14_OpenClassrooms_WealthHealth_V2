@@ -1,13 +1,28 @@
+/* react  */
 import React, {useState, useEffect} from 'react'
-import styles from './dataTable.module.css'
+/* table  */
 import { employeeColumns } from './employeeColumns'
 import useTable from './useTable'
 import TablePagination from './TablePagination'
+/* prop types */
+import PropTypes from 'prop-types'
+/* css   */ 
+import styles from './dataTable.module.css'
 
 
+/**
+ * @function useSortableData
+ * @export
+ * @description sort table data 
+ * @param {object} items - itemps of table
+ * @param {string} config - config for table
+ * @return {HTMLElement} component generated HTML
+ */
 const useSortableData = (items, config = null) => {
   
-  const [sortConfig, setSortConfig] = React.useState(config);
+  const [sortConfig, setSortConfig] = React.useState(config)
+  /*  useMemo hook that lets you cache the result of a calculation
+   between re-renders  */
   const sortedItems = React.useMemo(() => {
     let sortableItems = [...items]
    
@@ -62,16 +77,27 @@ const useSortableData = (items, config = null) => {
       sortConfig.key === key &&
       sortConfig.direction === 'ascending'
     ) {
-      direction = 'descending';
+      direction = 'descending'
     }
-    setSortConfig({ key, direction });
+    setSortConfig({ key, direction })
   };
 
-  return { items: sortedItems, requestSort, sortConfig };
-};
+  return { items: sortedItems, requestSort, sortConfig }
+}
+useSortableData.prototype = {
+  items: PropTypes.object.isRequired,
+  config: PropTypes.string,
+}
 
 
-
+/**
+ * @function DataTable
+ * @export
+ * @description data table 
+ * @param {object} products - data of table
+ * @param {Number} rowsPerPage - rows per page
+ * @return {HTMLElement} component generated HTML
+ */
 export default function DataTable({products,rowsPerPage}) {
   const { items, requestSort, sortConfig } = useSortableData(products)
 
@@ -80,8 +106,8 @@ export default function DataTable({products,rowsPerPage}) {
   const [minEntries, setMinEntries] = useState(0);
   const [maxEntries, setMaxEntries] = useState(0);
 
-//   console.log("nbre par page:",props.rowsPerPage)
-//   console.log("nr page:",page)
+//   console.log("number page:",props.rowsPerPage)
+//   console.log("page:",page)
 
   useEffect(() => {
         if (items) {
@@ -107,16 +133,26 @@ export default function DataTable({products,rowsPerPage}) {
         }
   },[items,page,rowsPerPage])
 
-//   console.log("range:", range)
-//   console.log(minEntries, maxEntries )
+   //   console.log("range:", range)
+   //   console.log(minEntries, maxEntries )
 
 
+  /**
+ * @function getClassNamesFor
+ * @export
+ * @description column name for sort
+ * @param {string} products - column name
+ */
   const getClassNamesFor = (name) => {
     if (!sortConfig) {
-      return;
+      return
     }
-    return sortConfig.key === name ? sortConfig.direction : undefined;
-  };
+    return sortConfig.key === name ? sortConfig.direction : undefined
+  }
+  getClassNamesFor.prototype = {
+    name: PropTypes.string.isRequired,
+  }
+
   return (
     <>
     <table>
@@ -159,10 +195,12 @@ export default function DataTable({products,rowsPerPage}) {
             <p>Showing {minEntries} to {maxEntries} of {(products).length} entries</p>
         </div>
 
-     <TablePagination range={range} slice={slice} setPage={setPage} page={page} />
-     
+     <TablePagination range={range} slice={slice} setPage={setPage} page={page} />    
     
-    </>
-    
+    </>    
   )
+}
+DataTable.prototype = {
+  products: PropTypes.object.isRequired,
+  rowsPerPage: PropTypes.number.isRequired,
 }

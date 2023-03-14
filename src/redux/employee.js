@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit'
-// import localStorge from '../data/localStorage'
+/* mock data  */
 import { employeeMoock } from '../data/employeeMock'
 
 
@@ -21,7 +21,6 @@ const employeeSlice = createSlice({
   reducers: {
     addEmployee: (state, action) => {
       state.employeeList.unshift(action.payload)
-      // localStorge.setEmployeeStorage(state.employeeList)
     },
   },
 })

@@ -1,7 +1,7 @@
+/* react */
+import { Link } from "react-router-dom"
 /* css  */
 import styles from './error.module.css'
-//react
-import { Link } from "react-router-dom"
 
 
 /**

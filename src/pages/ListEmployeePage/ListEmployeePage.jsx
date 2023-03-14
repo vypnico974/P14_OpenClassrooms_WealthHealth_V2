@@ -1,15 +1,19 @@
 /* react */
-import React, { useState, useEffect } from "react"
+import React, { useState,lazy, Suspense } from "react"
 import { Link } from "react-router-dom"
+/* redux  */
 import { useSelector } from 'react-redux'
 import { selectEmployees } from "../../redux/selector"
-/* employee table   */
-// import Table from "../../components/Table/Table"
-/* employee columns     */
-import { employeeColumns } from '../../components/Table/employeeColumns'
 /* css  */
 import styles from './listEmployeePage.module.css'
-import DataTable from "../../components/Table/DataTable"
+
+/**
+ * Const Table import the component table with lazy for optimize perf.
+ *  Lazy call the component when is necessary
+ */
+const DataTable = lazy(() => import("../../components/Table/DataTable"))
+
+
 
 /**
  * @function ListEmployeePage
@@ -19,24 +23,17 @@ import DataTable from "../../components/Table/DataTable"
  */
 export default function ListEmployeePage() {
 
- 
-
   //// Use Selector for extract: employee (state)
   const employeState = useSelector(selectEmployees)
   // console.log("state employee:",employeState)
     
-  const columns = React.useMemo(
-    () => employeeColumns,
-  )
-
+  /* hook useMemo for optimize the react speed. useMemo store
+    a value in the memory and not re-excute if the value not change */
   const data = 
     React.useMemo(() => employeState, [employeState])
 
     const [dataToDisplay, setDataToDisplay] = useState(data)
     const [itemsShow, setItemsShow] = useState(10)
-
-
-
 
   const handleSearch = (event) => {
     let dataFilter = []
@@ -45,7 +42,7 @@ export default function ListEmployeePage() {
         ("" + s).toLowerCase().trim().includes(event.toLowerCase().trim())
       )
     }) 
-    console.log("data to display:", dataFilter)
+    //console.log("data to display:", dataFilter)
     setDataToDisplay(dataFilter)
   }
 
@@ -54,6 +51,7 @@ export default function ListEmployeePage() {
     setItemsShow(event)
   }
 
+  console.log(dataToDisplay)
   return (
     <main>
       <div className={styles.tableContainer}>
@@ -65,6 +63,8 @@ export default function ListEmployeePage() {
               type="search"
               id="search"
               name="search"
+              aria-label="search"
+              placeholder="search..."
               onChange={(event) => handleSearch(event.target.value)}
             />
           </div>
@@ -88,10 +88,9 @@ export default function ListEmployeePage() {
          
         </div>
 
-
-        {/* <Table columns={columns} data={data} /> */}
-     
-        <DataTable products={dataToDisplay} rowsPerPage={itemsShow} />
+        <Suspense fallback={<p>Loading...</p>}>
+          <DataTable products={dataToDisplay} rowsPerPage={itemsShow} />
+        </Suspense>
       </div>
 
       <div className={styles.btnContainer}>

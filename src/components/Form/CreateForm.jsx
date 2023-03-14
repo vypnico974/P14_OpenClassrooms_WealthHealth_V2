@@ -1,11 +1,8 @@
 /* react */
-import * as React from "react"
+import React from "react"
 import { useState } from "react"
-// /* react select  */
-// import Select from 'react-select'
 /* modal  */
 import { Modal } from 'react-modal-by-vyplasiln'
-// import 'react-modal-by-vyplasiln/dist/index.css'
 /* data  */
 import { statesArray } from "../../data/states"
 import {departmentArray} from "../../data/department"
@@ -18,7 +15,7 @@ import Select from "../Select/Select"
 import PropTypes from 'prop-types'
 /* css  */
 import styles from './createForm.module.css'
-
+/* calendar component    */
 import InputCalendar from "../InputCalendar/InputCalendar"
 
 
@@ -29,8 +26,6 @@ import InputCalendar from "../InputCalendar/InputCalendar"
  * @return {HTMLElement} component generated HTML
  */
 export default function CreateForm() {
-
-    const dispatch = useDispatch()
 
     /* informations - use state */
     const [firstName, setFirstName] = useState("")
@@ -50,6 +45,9 @@ export default function CreateForm() {
 
     /* modal -use state   */
     const [showModal, setShowModal] = useState(false)
+
+    /*  Use dispatch, for send the action */
+    const dispatch = useDispatch()
 
     // console.log("departement:", selectedDepartment)
 
@@ -93,20 +91,16 @@ export default function CreateForm() {
         event: PropTypes.object.isRequired,
     }
 
-    
-
-   
-  
-    /**
-     * @function reset
-     * @description  formulaire rest
-     * 
-    */
-    const reset = () => {
-        document.getElementById("createForm").reset()
-        setDateOfBirth("")
-        setStartDate("")
-    }
+    // /**
+    //  * @function reset
+    //  * @description  formulaire rest
+    //  * 
+    // */
+    // const reset = () => {
+    //     document.getElementById("createForm").reset()
+    //     setDateOfBirth("")
+    //     setStartDate("")
+    // }
 
      /**
      * @function handleSubmit
@@ -139,14 +133,14 @@ export default function CreateForm() {
             city: city,
             state: "",
             stateAbbrev: selectedState,
-            zipcode: zipCode,
+            zipCode: zipCode,
             department: selectedDepartment
         }
 
-        /* add employee store(redux) and local storage(json)   */
+        /* add employee store(redux)  */
         dispatch(addEmployee(currentEmployee))
 
-        console.log("employé :",currentEmployee)
+        //console.log("employé :",currentEmployee)
 
         /* currentEmployee reset   */
         currentEmployee = {
@@ -165,7 +159,7 @@ export default function CreateForm() {
        // console.log("reset currentEmployee :",currentEmployee)
 
         setShowModal(true)
-        reset()
+        // reset()
     }
     handleSubmit.prototype = {
         event: PropTypes.object.isRequired,
@@ -182,13 +176,15 @@ export default function CreateForm() {
                     <div className={styles.informationsContainer__firstName}>
                         <label htmlFor="firstName">First name</label>
                         <p>
-                            <input className={styles.input} autoComplete="off"
+                            <input className={styles.input}
+                                autoComplete="off"
                                 id="firstName"
-                                name="First-name"
+                                name="firstName"
+                                aria-label="firstName"
                                 onChange={(e) => setFirstName(e.target.value)}
                                 placeholder="first name" 
                                 type="text" 
-                                required={true}
+                                // required={true}
                                 // pattern="[A-zÀ-ú-']{2,}"
                                 // title="At least 2 alphabetic characters"
                             />
@@ -199,11 +195,12 @@ export default function CreateForm() {
                         <p>
                             <input autoComplete="off"
                                 id="lastName"
-                                name="Last-name"
+                                name="lastName"
+                                aria-label="lastName"
                                 onChange={(e) => setLastName(e.target.value)}
                                 placeholder="last name" 
                                 type="text" 
-                                required={true}
+                                // required={true}
                                 // pattern="[A-zÀ-ú-']{2,}"
                                 // title="At least 2 alphabetic characters"
                             />
@@ -233,6 +230,7 @@ export default function CreateForm() {
                                 <input autoComplete="off"
                                     id="street"
                                     name="street"
+                                    aria-label="street"
                                     onChange={(e) => setStreet(e.target.value)}
                                     placeholder="street" 
                                     type="text" 
@@ -245,6 +243,7 @@ export default function CreateForm() {
                                 <input autoComplete="off"
                                     id="city"
                                     name="city"
+                                    aria-label="city"
                                     onChange={(e) => setCity(e.target.value)}
                                     placeholder="city" 
                                     type="text" 
@@ -267,7 +266,9 @@ export default function CreateForm() {
                             <input autoComplete="off"
                             type="number"
                             id="zipCode"
-                            name="Zip code"
+                            name="ZipCode"
+                            aria-label="ZipCode"
+                            placeholder="zip code"
                             onChange={(e) => setZipCode(e.target.value)}
                             />
                         </p>                    
@@ -277,8 +278,8 @@ export default function CreateForm() {
                 <div className={styles.departmentContainer}>
                     <div className={styles.informationsContainer__select}>
                         <Select data={departmentArray}
-                         id="statessss"
-                         label="department"
+                         id="department"
+                         label="Department"
                          setter={setSelectedDepartment}                         
                          aria-label="department"
                         />               
@@ -292,10 +293,6 @@ export default function CreateForm() {
             </div>      
 
             <div className={styles.ModalContainer}>
-                {/* <button onClick={() => Toggle()}>
-                Clic to open Modal
-                </button> */}
-
                 <Modal 
                 id="modalEmployeeCreated"
                 showModal={showModal}

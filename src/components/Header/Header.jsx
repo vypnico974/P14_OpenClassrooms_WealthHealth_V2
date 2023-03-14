@@ -29,7 +29,6 @@ export default function Header({picture,arrayNav,formatting}) {
         <ul className={styles.header__nav__ul}>
         {arrayNav.map((nav, index) => (
           <li className={`${styles["header__nav__ul--li"]} ${styles[formatting]}`} key={`${index}-${nav.linkNav}`}>
-            {/* pour surligner le lien active  */}
             <NavLink className={({ isActive }) => {
             return isActive ? styles.navLink_active : styles.link
           }} to={nav.linkNav}
