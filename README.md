@@ -61,7 +61,7 @@ Utilisation de composants personnalisés au lieu des librairies suivantes :
 
 # Installation 
 
-- Clone ce répertoire :
+- Cloner ce répertoire :
     git clone https://github.com/vypnico974/P14_OpenClassrooms_WealthHealth.git
 - Après clonage, installatons des dépendances par npm ou yarn :
     - avec npm : npm i (ou npm install)

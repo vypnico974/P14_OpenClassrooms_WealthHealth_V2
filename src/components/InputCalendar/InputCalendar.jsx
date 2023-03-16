@@ -198,7 +198,13 @@ function DatePicker(props) {
         <div className='datepicker'>
                 <div ref={ref} onClick = {() => setIsComponentVisible(true)}>
                 <input className='datepicker__input'
-                 type='text' value={date.toLocaleDateString("en-US", options)} readOnly /* onInput={props.handleResponse(date)} */ ref={inputRef}/>
+                 type='text'
+                 id={props.name}
+                 name={props.name}
+                 aria-label={props.name}
+                 value={date.toLocaleDateString("en-US", options)}
+                 readOnly /* onInput={props.handleResponse(date)} */
+                 ref={inputRef}/>
                 </div>
                 {isComponentVisible ? (
                 <div ref={ref} className='datepicker__container'>

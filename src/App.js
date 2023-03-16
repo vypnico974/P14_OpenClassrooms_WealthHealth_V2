@@ -1,8 +1,6 @@
 /* react */
-import {React} from "react"
+import React, { lazy, Suspense } from "react"
 import { Routes, Route } from "react-router-dom"
-/* composant  */
-import Header from './components/Header/Header'
 /*  pages */
 import ListEmployeePage from "./pages/ListEmployeePage/ListEmployeePage"
 import CreateEmployeePage from "./pages/CreateEmployeePage/CreateEmployeePage"
@@ -12,6 +10,12 @@ import './styles/normalize.css'
 import './styles/global.css'
 /* logo */
 import logoHeader from "./assets/Wealth_Health_logo.webp"
+
+/**
+ * Const Header import the Header  component  with lazy for optimize perf.
+ *  Lazy call the component when is necessary
+ */
+const Header = lazy(() => import("./components/Header/Header"))
 
 
 const arrayNav = [{ linkNav: "/", titleNav: "Create Employee" },
@@ -28,9 +32,11 @@ const arrayNav = [{ linkNav: "/", titleNav: "Create Employee" },
 export default function App() {
   return (
     <>  
-      {/* header  example formatting = "smallHeader"*/}   
-      <Header picture={logoHeader} linkPicture="/" arrayNav={arrayNav} 
-       formatting="header" /> 
+      <Suspense fallback={<p>Loading...</p>}>
+        {/* header  example formatting = "smallHeader"*/}   
+        <Header picture={logoHeader} linkPicture="/" arrayNav={arrayNav} 
+        formatting="header" /> 
+       </Suspense>
         <Routes> 
           <Route exact path="/" element={<CreateEmployeePage />}/>
             <Route exact path="/list" element={<ListEmployeePage />}/>

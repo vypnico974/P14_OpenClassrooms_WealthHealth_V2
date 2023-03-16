@@ -69,7 +69,7 @@ export default function ListEmployeePage() {
             />
           </div>
           <div>
-          <div className={styles.filter}>
+          <div className={styles.containerFilter_show}>
             <label>Show</label>
             <select
             id="show"
