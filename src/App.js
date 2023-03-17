@@ -39,7 +39,8 @@ export default function App() {
        </Suspense>
         <Routes> 
           <Route exact path="/" element={<CreateEmployeePage />}/>
-            <Route exact path="/list" element={<ListEmployeePage />}/>
+          <Route exact path="/P14_OpenClassrooms_WealthHealth_V2/" element={<CreateEmployeePage />}/>
+          <Route exact path="/list" element={<ListEmployeePage />}/>
             {/* Error Route */}
           <Route path="*" element={<Error />}/>
         </Routes>
