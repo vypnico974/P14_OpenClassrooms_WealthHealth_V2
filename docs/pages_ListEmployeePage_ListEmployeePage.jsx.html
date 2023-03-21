@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: pages/ListEmployeePage/ListEmployeePage.jsx</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: pages/ListEmployeePage/ListEmployeePage.jsx</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/* react */
+import React, { useState,lazy, Suspense } from "react"
+import { Link } from "react-router-dom"
+/* redux  */
+import { useSelector } from 'react-redux'
+import { selectEmployees } from "../../redux/selector"
+/* css  */
+import styles from './listEmployeePage.module.css'
+
+/**
+ * Const Table import the component table with lazy for optimize perf.
+ *  Lazy call the component when is necessary
+ */
+const DataTable = lazy(() => import("../../components/Table/DataTable"))
+
+
+
+/**
+ * @function ListEmployeePage
+ * @export
+ * @description List employee page 
+ * @return {HTMLElement} component generated HTML
+ */
+export default function ListEmployeePage() {
+
+  //// Use Selector for extract: employee (state)
+  const employeState = useSelector(selectEmployees)
+  // console.log("state employee:",employeState)
+    
+  /* hook useMemo for optimize the react speed. useMemo store
+    a value in the memory and not re-excute if the value not change */
+  const data = 
+    React.useMemo(() => employeState, [employeState])
+
+    const [dataToDisplay, setDataToDisplay] = useState(data)
+    const [itemsShow, setItemsShow] = useState(10)
+
+  const handleSearch = (event) => {
+    let dataFilter = []
+    dataFilter =  data.filter((row) => {
+      return Object.values(row).some((s) =>
+        ("" + s).toLowerCase().trim().includes(event.toLowerCase().trim())
+      )
+    }) 
+    //console.log("data to display:", dataFilter)
+    setDataToDisplay(dataFilter)
+  }
+
+
+  const handleShow = (event) => {
+    setItemsShow(event)
+  }
+
+  console.log(dataToDisplay)
+  return (
+    &lt;main>
+      &lt;div className={styles.tableContainer}>
+
+        &lt;div className={styles.containerFilter}>
+          &lt;div className={styles.filter}>
+            &lt;label htmlFor="search">Search: &lt;/label>
+            &lt;input
+              type="search"
+              id="search"
+              name="search"
+              aria-label="search"
+              placeholder="search..."
+              onChange={(event) => handleSearch(event.target.value)}
+            />
+          &lt;/div>
+          &lt;div>
+          &lt;div className={styles.containerFilter_show}>
+            &lt;label>Show&lt;/label>
+            &lt;select
+            id="show"
+            name="show"
+            aria-label="show"
+             defaultValue={10}
+              onChange={(event) => handleShow(event.target.value)}>
+                    &lt;option value={10}>10&lt;/option>
+                    &lt;option value={25}>25&lt;/option>
+                    &lt;option value={50}>50&lt;/option>
+                    &lt;option value={100}>100&lt;/option>
+              &lt;/select>
+              &lt;span>entries&lt;/span>
+            &lt;/div>
+          &lt;/div>
+         
+        &lt;/div>
+
+        &lt;Suspense fallback={&lt;p>Loading...&lt;/p>}>
+          &lt;DataTable products={dataToDisplay} rowsPerPage={itemsShow} />
+        &lt;/Suspense>
+      &lt;/div>
+
+      &lt;div className={styles.btnContainer}>
+        &lt;Link to="/">&lt;button>Home&lt;/button>&lt;/Link>
+      &lt;/div> 
+      
+    &lt;/main>
+  )
+}
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#App">App</a></li><li><a href="global.html#CreateEmployeePage">CreateEmployeePage</a></li><li><a href="global.html#CreateForm">CreateForm</a></li><li><a href="global.html#DataTable">DataTable</a></li><li><a href="global.html#Error">Error</a></li><li><a href="global.html#Header">Header</a></li><li><a href="global.html#ListEmployeePage">ListEmployeePage</a></li><li><a href="global.html#Select">Select</a></li><li><a href="global.html#TablePagination">TablePagination</a></li><li><a href="global.html#calculateRange">calculateRange</a></li><li><a href="global.html#employeeSlice">employeeSlice</a></li><li><a href="global.html#getClassNamesFor">getClassNamesFor</a></li><li><a href="global.html#handleSubmit">handleSubmit</a></li><li><a href="global.html#persistedReducer">persistedReducer</a></li><li><a href="global.html#selectDateBirthHandler">selectDateBirthHandler</a></li><li><a href="global.html#selectDateStartHandler">selectDateStartHandler</a></li><li><a href="global.html#sliceData">sliceData</a></li><li><a href="global.html#useSortableData">useSortableData</a></li><li><a href="global.html#useTable">useTable</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.2</a> on Tue Mar 21 2023 18:03:03 GMT+0400 (heure normale de Maurice)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

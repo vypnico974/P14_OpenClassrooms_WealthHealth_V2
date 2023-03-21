@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: components/Table/DataTable.jsx</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: components/Table/DataTable.jsx</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/* react  */
+import React, {useState, useEffect} from 'react'
+/* table  */
+import { employeeColumns } from './employeeColumns'
+import useTable from './useTable'
+import TablePagination from './TablePagination'
+/* prop types */
+import PropTypes from 'prop-types'
+/* css   */ 
+import styles from './dataTable.module.css'
+
+
+/**
+ * @function useSortableData
+ * @export
+ * @description sort table data 
+ * @param {object} items - itemps of table
+ * @param {string} config - config for table
+ * @return {HTMLElement} component generated HTML
+ */
+const useSortableData = (items, config = null) => {
+  
+  const [sortConfig, setSortConfig] = React.useState(config)
+  /*  useMemo hook that lets you cache the result of a calculation
+   between re-renders  */
+  const sortedItems = React.useMemo(() => {
+    let sortableItems = [...items]
+   
+    if (sortConfig !== null) {
+     // console.log(sortConfig)
+      sortableItems.sort((a, b) => {
+        if ((sortConfig.key == 'dateOfBirth') || (sortConfig.key == 'startDate')) {
+          const yearA = a[sortConfig.key].toLowerCase().split('/')[2]
+          const yearB = b[sortConfig.key].toLowerCase().split('/')[2]
+          const monthA = a[sortConfig.key].toLowerCase().split('/')[1]
+          const monthB = b[sortConfig.key].toLowerCase().split('/')[1]
+          const dayA = a[sortConfig.key].toLowerCase().split('/')[0]
+          const dayB = b[sortConfig.key].toLowerCase().split('/')[0]
+        //   console.log(dayA, dayB)
+          if (yearA > yearB) 
+            return sortConfig.direction === 'ascending' ? 1 : -1
+          else if (yearA &lt; yearB)
+            return sortConfig.direction === 'ascending' ? -1 : 1
+          else {
+            if (monthA > monthB)
+              return sortConfig.direction === 'ascending' ? 1 : -1
+            else if (monthA &lt; monthB)
+              return sortConfig.direction === 'ascending' ? -1 : 1
+            else {
+              if (dayA > dayB)
+                return sortConfig.direction === 'ascending' ? 1 : -1
+              else if (dayA &lt; dayB)
+                return sortConfig.direction === 'ascending' ? -1 : 1
+              else return 0
+            }
+          }
+        }
+        else 
+        {
+         if (a[sortConfig.key] &lt; b[sortConfig.key]) {
+          return sortConfig.direction === 'ascending' ? -1 : 1;
+          }
+          if (a[sortConfig.key] > b[sortConfig.key]) {
+          return sortConfig.direction === 'ascending' ? 1 : -1;
+          }
+        return 0;
+        }
+      });
+    }
+    return sortableItems;
+  }, [items, sortConfig]);
+
+  const requestSort = (key) => {
+    let direction = 'ascending';
+    if (
+      sortConfig &amp;&amp;
+      sortConfig.key === key &amp;&amp;
+      sortConfig.direction === 'ascending'
+    ) {
+      direction = 'descending'
+    }
+    setSortConfig({ key, direction })
+  };
+
+  return { items: sortedItems, requestSort, sortConfig }
+}
+useSortableData.prototype = {
+  items: PropTypes.object.isRequired,
+  config: PropTypes.string,
+}
+
+
+/**
+ * @function DataTable
+ * @export
+ * @description data table 
+ * @param {object} products - data of table
+ * @param {Number} rowsPerPage - rows per page
+ * @return {HTMLElement} component generated HTML
+ */
+export default function DataTable({products,rowsPerPage}) {
+  const { items, requestSort, sortConfig } = useSortableData(products)
+
+  const [page, setPage] = useState(1);
+  let { slice, range } = useTable(items, page, rowsPerPage)
+  const [minEntries, setMinEntries] = useState(0);
+  const [maxEntries, setMaxEntries] = useState(0);
+
+//   console.log("number page:",props.rowsPerPage)
+//   console.log("page:",page)
+
+  useEffect(() => {
+        if (items) {
+            if ((products).length &lt; range.length ) {
+                setMinEntries(1) 
+            }
+            else {
+                setMinEntries((page - 1) * parseInt(rowsPerPage) + 1 )
+            } 
+            if ((products).length &lt; (rowsPerPage).length) {
+                setMaxEntries((products).length)
+            }
+            else {
+                if (((page - 1) * parseInt(rowsPerPage) + parseInt(rowsPerPage)) &lt; (products).length) {
+                    setMaxEntries((page - 1) * parseInt(rowsPerPage) + parseInt(rowsPerPage))
+                }
+                else {
+                    setMaxEntries((products).length)
+                }
+                
+            }
+            
+        }
+  },[items,page,rowsPerPage])
+
+   //   console.log("range:", range)
+   //   console.log(minEntries, maxEntries )
+
+
+  /**
+ * @function getClassNamesFor
+ * @export
+ * @description column name for sort
+ * @param {string} products - column name
+ */
+  const getClassNamesFor = (name) => {
+    if (!sortConfig) {
+      return
+    }
+    return sortConfig.key === name ? sortConfig.direction : undefined
+  }
+  getClassNamesFor.prototype = {
+    name: PropTypes.string.isRequired,
+  }
+
+  return (
+    &lt;>
+    &lt;table>
+        &lt;thead>
+        &lt;tr>
+        {employeeColumns.map((item,index) => (
+          &lt;th key={item.accessor+'-'+index}>
+                &lt;button
+                type="button"
+                onClick={() => requestSort(item.accessor)}
+                className={`${styles[getClassNamesFor(item.accessor)]}`}
+                >
+                {item.Header}
+                &lt;/button>
+          &lt;/th>
+        ))}  
+        &lt;/tr>
+      &lt;/thead>    
+      &lt;tbody>
+            {slice.map((item,index) => (
+          &lt;tr key={item.id+'-'+index}>
+            &lt;td>{item.firstName}&lt;/td>
+            &lt;td>{item.lastName}&lt;/td>
+            &lt;td>{item.dateOfBirth}&lt;/td>
+            &lt;td>{item.startDate}&lt;/td>
+            &lt;td>{item.street}&lt;/td>
+            &lt;td>{item.city}&lt;/td>
+            &lt;td>{item.stateAbbrev}&lt;/td>
+            &lt;td>{item.zipCode}&lt;/td>
+            &lt;td>{item.department}&lt;/td>
+          &lt;/tr>
+        ))}
+      &lt;/tbody>
+    &lt;/table>
+    { (slice.length === 0) &amp;&amp;
+           (&lt;p>No data available in table&lt;/p>)
+
+        }
+        &lt;div>
+            &lt;p>Showing {minEntries} to {maxEntries} of {(products).length} entries&lt;/p>
+        &lt;/div>
+
+     &lt;TablePagination range={range} slice={slice} setPage={setPage} page={page} />    
+    
+    &lt;/>    
+  )
+}
+DataTable.prototype = {
+  products: PropTypes.object.isRequired,
+  rowsPerPage: PropTypes.number.isRequired,
+}</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#App">App</a></li><li><a href="global.html#CreateEmployeePage">CreateEmployeePage</a></li><li><a href="global.html#CreateForm">CreateForm</a></li><li><a href="global.html#DataTable">DataTable</a></li><li><a href="global.html#Error">Error</a></li><li><a href="global.html#Header">Header</a></li><li><a href="global.html#ListEmployeePage">ListEmployeePage</a></li><li><a href="global.html#Select">Select</a></li><li><a href="global.html#TablePagination">TablePagination</a></li><li><a href="global.html#calculateRange">calculateRange</a></li><li><a href="global.html#employeeSlice">employeeSlice</a></li><li><a href="global.html#getClassNamesFor">getClassNamesFor</a></li><li><a href="global.html#handleSubmit">handleSubmit</a></li><li><a href="global.html#persistedReducer">persistedReducer</a></li><li><a href="global.html#selectDateBirthHandler">selectDateBirthHandler</a></li><li><a href="global.html#selectDateStartHandler">selectDateStartHandler</a></li><li><a href="global.html#sliceData">sliceData</a></li><li><a href="global.html#useSortableData">useSortableData</a></li><li><a href="global.html#useTable">useTable</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.2</a> on Tue Mar 21 2023 18:03:03 GMT+0400 (heure normale de Maurice)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

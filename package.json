@@ -2,7 +2,6 @@
   "name": "p14_front_vyplasiln",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://vypnico974.github.io/P14_OpenClassrooms_WealthHealth_V2/",
   "dependencies": {
     "@babel/plugin-transform-regenerator": "^7.20.5",
     "@reduxjs/toolkit": "^1.9.2",
@@ -25,7 +24,8 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "predeploy": "npm run build",
-    "deploy": "gh-pages -d build"
+    "deploy": "gh-pages -d build",
+    "docs": "jsdoc -c jsdoc.conf.json"
   },
   "browserslist": {
     "production": [
@@ -43,6 +43,7 @@
     "@babel/plugin-transform-runtime": "^7.21.0",
     "gh-pages": "^5.0.0",
     "jest-localstorage-mock": "^2.4.21",
-    "jest-location-mock": "^1.0.9"
+    "jest-location-mock": "^1.0.9",
+    "jsdoc": "^4.0.2"
   }
 }

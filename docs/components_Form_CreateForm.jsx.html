@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: components/Form/CreateForm.jsx</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: components/Form/CreateForm.jsx</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/* react */
+import React from "react"
+import { useState } from "react"
+/* modal  */
+import { Modal } from 'react-modal-by-vyplasiln'
+/* data  */
+import { statesArray } from "../../data/states"
+import {departmentArray} from "../../data/department"
+/* redux  */
+import { useDispatch } from 'react-redux'
+import { addEmployee } from "../../redux/employee"
+
+import Select from "../Select/Select"
+/* prop types */
+import PropTypes from 'prop-types'
+/* css  */
+import styles from './createForm.module.css'
+/* calendar component    */
+import InputCalendar from "../InputCalendar/InputCalendar"
+
+
+/**
+ * @function CreateForm
+ * @export
+ * @description Create employee page 
+ * @return {HTMLElement} component generated HTML
+ */
+export default function CreateForm() {
+
+    /* informations - use state */
+    const [firstName, setFirstName] = useState("")
+    const [lastName, setLastName] = useState("")
+    const [dateOfBirth, setDateOfBirth] = useState()
+    const [startDate, setStartDate] = useState("")
+    /* address - use state */
+    const [street, setStreet] = useState("")
+    const [city, setCity] = useState("")
+    const [selectedState, setSelectedState] = useState(statesArray[0].abbreviation)
+     const [zipCode, setZipCode] = useState()
+    /* department - use state */
+    const [selectedDepartment, setSelectedDepartment] = useState(departmentArray[0].label)
+   
+    const [resetBirth, setResetBirth] = useState(Math.random());
+    const [resetStart, setResetstart] = useState(Math.random());
+
+    /* modal -use state   */
+    const [showModal, setShowModal] = useState(false)
+
+    /*  Use dispatch, for send the action */
+    const dispatch = useDispatch()
+
+    // console.log("departement:", selectedDepartment)
+
+    // const Toggle = () => setShowModal(!showModal)
+
+    // your modal style 
+    const modal_styles = {
+      "backgroundColor": "rgb(187 245 193)",   
+      "borderRadius": 10,
+      "boxShadow": "rgb(5 60 9) 0px 0px 0px 2px",
+      "color": "rgb(5 72 4)",
+      "fontSize": 18,
+      "height": "fit-content",
+      "padding": "20px 50px",
+      "width": "fit-content"
+    }
+
+
+     /**
+     * @function selectDateBirthHandler
+     * @description  select Date birth handler
+     * @param {object} event - date birth
+    */
+    const selectDateBirthHandler = (event) => {
+        setDateOfBirth(event)            
+    }
+    selectDateBirthHandler.prototype = {
+        event: PropTypes.object.isRequired,
+    }
+
+
+    /**
+     * @function selectDateStartHandler
+     * @description  select start date handler
+     * @param {object} event - start date 
+    */
+    const selectDateStartHandler = (event) => {
+        setStartDate(event)
+    }
+    selectDateStartHandler.prototype = {
+        event: PropTypes.object.isRequired,
+    }
+
+    // /**
+    //  * @function reset
+    //  * @description  formulaire rest
+    //  * 
+    // */
+    // const reset = () => {
+    //     document.getElementById("createForm").reset()
+    //     setDateOfBirth("")
+    //     setStartDate("")
+    // }
+
+     /**
+     * @function handleSubmit
+     * @description  handle submit 
+     * @param {object} event - form event
+    */
+    const handleSubmit = (event) => {
+        event.preventDefault() // prevent default of formulaire        
+
+        let currentDateOfBirth = ""
+        let currentStartDate = ""
+
+        /*  date format   */
+        let options = {year: 'numeric', month: '2-digit', day: '2-digit'  }
+
+        if (dateOfBirth) {
+            currentDateOfBirth = dateOfBirth.toLocaleDateString("en-US", options)        
+        }
+
+        if (startDate) {
+            currentStartDate = startDate.toLocaleDateString("en-US", options)        
+        }
+       
+        let currentEmployee = {
+            firstName: firstName,
+            lastName: lastName,
+            dateOfBirth: currentDateOfBirth,
+            startDate: currentStartDate,
+            street: street,
+            city: city,
+            state: "",
+            stateAbbrev: selectedState,
+            zipCode: zipCode,
+            department: selectedDepartment
+        }
+
+        /* add employee store(redux)  */
+        dispatch(addEmployee(currentEmployee))
+
+        //console.log("employé :",currentEmployee)
+
+        /* currentEmployee reset   */
+        currentEmployee = {
+            firstName: "",
+            lastName: "",
+            dateOfBirth: "",
+            startDate: "",
+            street: "",
+            city: "",
+            state: "",
+            stateAbbrev: "",
+            zipcode: "",
+            department: ""
+        }
+
+       // console.log("reset currentEmployee :",currentEmployee)
+
+        setShowModal(true)
+        // reset()
+    }
+    handleSubmit.prototype = {
+        event: PropTypes.object.isRequired,
+    }
+
+
+  return (
+    &lt;div>
+        &lt;form onSubmit={handleSubmit} id="createForm" >
+
+           &lt;div className={styles.createForm}>
+
+                &lt;div className={styles.informationsContainer}>
+                    &lt;div className={styles.informationsContainer__firstName}>
+                        &lt;label htmlFor="firstName">First name&lt;/label>
+                        &lt;p>
+                            &lt;input className={styles.input}
+                                autoComplete="off"
+                                id="firstName"
+                                name="firstName"
+                                aria-label="firstName"
+                                onChange={(e) => setFirstName(e.target.value)}
+                                placeholder="first name" 
+                                type="text" 
+                                // required={true}
+                                // pattern="[A-zÀ-ú-']{2,}"
+                                // title="At least 2 alphabetic characters"
+                            />
+                        &lt;/p>                    
+                    &lt;/div>
+                    &lt;div className={styles.informationsContainer__lastName}>
+                        &lt;label htmlFor="lastName">Last name&lt;/label>
+                        &lt;p>
+                            &lt;input autoComplete="off"
+                                id="lastName"
+                                name="lastName"
+                                aria-label="lastName"
+                                onChange={(e) => setLastName(e.target.value)}
+                                placeholder="last name" 
+                                type="text" 
+                                // required={true}
+                                // pattern="[A-zÀ-ú-']{2,}"
+                                // title="At least 2 alphabetic characters"
+                            />
+                        &lt;/p>                    
+                    &lt;/div>
+                    &lt;div className={styles.informationsContainer__date}>
+                        &lt;label htmlFor="dateBirth">Date of Birth&lt;/label>                
+                        &lt;InputCalendar 
+                         handleResponse={selectDateBirthHandler}
+                         key={resetBirth}
+                         name="dateBirth"/>                
+                    &lt;/div>
+                    &lt;div className={styles.informationsContainer__date}>
+                        &lt;label htmlFor="startDate">Start Date&lt;/label>
+                        &lt;InputCalendar
+                         handleResponse={selectDateStartHandler}
+                         key={resetStart}
+                         name="startDate"/>
+                   &lt;/div>
+                &lt;/div>
+
+                &lt;fieldset className={styles.adressContainer}>
+                    &lt;legend>Address&lt;/legend>
+                    &lt;div className={styles.informationsContainer__firstName}>
+                        &lt;label htmlFor="street">Street&lt;/label>
+                            &lt;p>
+                                &lt;input autoComplete="off"
+                                    id="street"
+                                    name="street"
+                                    aria-label="street"
+                                    onChange={(e) => setStreet(e.target.value)}
+                                    placeholder="street" 
+                                    type="text" 
+                                />
+                            &lt;/p>                    
+                        &lt;/div>
+                        &lt;div className={styles.informationsContainer__lastName}>
+                        &lt;label htmlFor="city">City&lt;/label>
+                            &lt;p>
+                                &lt;input autoComplete="off"
+                                    id="city"
+                                    name="city"
+                                    aria-label="city"
+                                    onChange={(e) => setCity(e.target.value)}
+                                    placeholder="city" 
+                                    type="text" 
+                                />
+                            &lt;/p>                    
+                        &lt;/div>
+                        &lt;div className={styles.informationsContainer__select}>
+                            &lt;Select data={statesArray}
+                                id="states"
+                                label="States"
+                                setter={setSelectedState}                         
+                                aria-label="states"
+                            />
+                       
+            
+                        &lt;/div>
+                        &lt;div className={styles.informationsContainer__lastName}>
+                        &lt;label htmlFor="zipCode">Zip Code&lt;/label>
+                        &lt;p>
+                            &lt;input autoComplete="off"
+                            type="number"
+                            id="zipCode"
+                            name="ZipCode"
+                            aria-label="ZipCode"
+                            placeholder="zip code"
+                            onChange={(e) => setZipCode(e.target.value)}
+                            />
+                        &lt;/p>                    
+                    &lt;/div>
+                &lt;/fieldset>
+
+                &lt;div className={styles.departmentContainer}>
+                    &lt;div className={styles.informationsContainer__select}>
+                        &lt;Select data={departmentArray}
+                         id="department"
+                         label="Department"
+                         setter={setSelectedDepartment}                         
+                         aria-label="department"
+                        />               
+                    &lt;/div>                    
+                &lt;/div>               
+            &lt;/div> 
+
+
+            &lt;div className={styles.btnContainer}>
+                &lt;button id="submit"  type="submit">Save&lt;/button>
+            &lt;/div>      
+
+            &lt;div className={styles.ModalContainer}>
+                &lt;Modal 
+                id="modalEmployeeCreated"
+                showModal={showModal}
+                closeModal={() => setShowModal(false)}
+                modal_styles={modal_styles}
+                message="Employee Created !"
+                />
+            &lt;/div>
+        &lt;/form>
+    &lt;/div>
+   )
+}
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#App">App</a></li><li><a href="global.html#CreateEmployeePage">CreateEmployeePage</a></li><li><a href="global.html#CreateForm">CreateForm</a></li><li><a href="global.html#DataTable">DataTable</a></li><li><a href="global.html#Error">Error</a></li><li><a href="global.html#Header">Header</a></li><li><a href="global.html#ListEmployeePage">ListEmployeePage</a></li><li><a href="global.html#Select">Select</a></li><li><a href="global.html#TablePagination">TablePagination</a></li><li><a href="global.html#calculateRange">calculateRange</a></li><li><a href="global.html#employeeSlice">employeeSlice</a></li><li><a href="global.html#getClassNamesFor">getClassNamesFor</a></li><li><a href="global.html#handleSubmit">handleSubmit</a></li><li><a href="global.html#persistedReducer">persistedReducer</a></li><li><a href="global.html#selectDateBirthHandler">selectDateBirthHandler</a></li><li><a href="global.html#selectDateStartHandler">selectDateStartHandler</a></li><li><a href="global.html#sliceData">sliceData</a></li><li><a href="global.html#useSortableData">useSortableData</a></li><li><a href="global.html#useTable">useTable</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.2</a> on Tue Mar 21 2023 18:03:03 GMT+0400 (heure normale de Maurice)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

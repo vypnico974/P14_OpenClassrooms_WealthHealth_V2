@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Home</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Home</h1>
+
+    
+
+
+
+    
+
+
+    <h3> </h3>
+
+
+
+
+
+
+
+
+
+
+    
+
+
+
+
+    <section>
+        <article><h1>P14 OpenClassrooms Wealth Health - solution nr 2</h1>
+<p><img src="https://img.shields.io/badge/Author-Nicolas%20Vyplasil-green" alt="Author"></p>
+<p><a href="https://dev.to/envoy_/150-badges-for-github-pnk"><img src="https://img.shields.io/badge/React-20232A?style=for-the-badge&amp;logo=react&amp;logoColor=61DAFB" alt="React"></a>
+<a href="https://dev.to/envoy_/150-badges-for-github-pnk"><img src="https://img.shields.io/badge/Redux-593D88?style=for-the-badge&amp;logo=redux&amp;logoColor=white" alt="Redux"></a></p>
+<h2>La mission</h2>
+<p>Vous travaillez pour le département technologique d'une grande société financière, WealthHealth.
+Cette société utilise une application web interne, appelée HRnet, qui gère les dossiers des employés. L'application est ancienne et utilise jQuery côté front end, ce qui entraîne des bugs considérables et une augmentation des plaintes en interne. Votre équipe de développement s'efforce depuis un certain temps déjà de mettre à niveau l'application.</p>
+<h2>Besoins</h2>
+<ul>
+<li>Convertir l'ensemble du projet HRNet en React.</li>
+<li>Convertir l'un des quatre plugins jQuery actuels en React. Remplacer les 3 plugins jQuery restants par des composants React que tu coderas toi-même, ou que tu peux - - importer depuis des libraires existantes si tu manques de temps.</li>
+<li>Effectuer des tests de performance Lighthouse en comparant l'ancienne et la nouvelle application.</li>
+</ul>
+<p>Voici le <a href="https://github.com/OpenClassrooms-Student-Center/P12_Front-end">repo HRnet actuel</a>.
+N'oublie pas que toute l'application HRNet doit être convertie en React :</p>
+<ul>
+<li>Tu devras faire une nouvelle version des pages &quot;Create Employee&quot; et &quot;Employee List&quot; avec React.</li>
+<li>Tu devras ajouter un système de gestion d'état (la version actuelle utilise un stockage local).</li>
+<li>Tu dois aussi t'assurer que tout est cohérent au niveau du style. Pour cela, tu n'es pas obligé de refaire le design de l'application, mais si tu veux changer le  style pour quelque chose de plus moderne, tu es le bienvenu.</li>
+<li>Si tu as le temps, tu peux tester le code React avec une suite de tests unitaires. Sinon, seuls des tests manuels sont nécessaires.</li>
+</ul>
+<h2>Tests de performance</h2>
+<p>Nous voulons également mesurer des données quantifiables (ex. : temps de chargement des pages, appels réseau) pour nous assurer que la conversion de l'application à React améliore effectivement les performances. Pour cela, fais bien des audits de performance Lighthouse. Pour comparer, tu devras en faire un pour l'application jQuery HRnet actuelle, puis un autre une fois que l'application et le plugin jQuery choisi seront convertis en React.</p>
+<p>Penses bien à faire un build de l'application avant de faire ton audit. Ça impactera grandement les performances de ton application.</p>
+<h2>Solution nr 2</h2>
+<p>Pour la solution nr 2, j'ai limité l'utilisation de librairie par rapport
+à la <a href="https://github.com/vypnico974/P14_OpenClassrooms_WealthHealth">solution nr 1</a>.
+Utilisation de composants personnalisés au lieu des librairies suivantes :</p>
+<ul>
+<li>react-table</li>
+<li>react-select</li>
+<li>react-datapicker</li>
+</ul>
+<p>Lien vers le site : <a href="https://vypnico974.github.io/P14_OpenClassrooms_WealthHealth_V2/">solution nr2</a></p>
+<h2>Prérequis</h2>
+<ul>
+<li><a href="https://nodejs.org/en/">NodeJS (version16.13.2)</a></li>
+<li><a href="https://www.npmjs.com/">npm</a> or <a href="https://yarnpkg.com/getting-started/install">yarn</a></li>
+</ul>
+<h2>Dépendances</h2>
+<ul>
+<li>A text editor (example : <a href="https://code.visualstudio.com/">Visual Studio Code</a>)</li>
+<li><a href="https://reactjs.org/">react</a></li>
+<li><a href="https://redux.js.org/introduction/installation">redux</a></li>
+<li><a href="https://redux.js.org/introduction/installation">react-redux</a></li>
+<li><a href="https://redux.js.org/introduction/installation">@reduxjs/toolkit</a></li>
+<li><a href="https://reactrouter.com/web/guides/quick-start">react-router-dom</a></li>
+<li><a href="https://www.npmjs.com/package/react-modal-by-vyplasiln?activeTab=readme">react-modal-by-vyplasiln</a></li>
+</ul>
+<h1>Installation</h1>
+<ul>
+<li>Cloner ce répertoire :
+git clone https://github.com/vypnico974/P14_OpenClassrooms_WealthHealth_V2.git</li>
+<li>Après clonage, installatons des dépendances par npm ou yarn :
+<ul>
+<li>avec npm : npm i (ou npm install)</li>
+<li>avec yarn :yarn (ou yarn install)</li>
+</ul>
+</li>
+<li>Excécuter l'application :
+<ul>
+<li>avec npm :npm start</li>
+<li>avec yarn : yarn start</li>
+</ul>
+</li>
+<li>Pour créer une version de production :
+<ul>
+<li>avec npm : npm run build</li>
+<li>avec yarn : yarn run build</li>
+</ul>
+</li>
+<li>Excécuter une version de production :
+<ul>
+<li>avec npm :
+<ul>
+<li>npm install -g serve</li>
+<li>serve -s build</li>
+</ul>
+</li>
+<li>avec yarn :
+<ul>
+<li>yarn install -g serve</li>
+<li>serve -s build</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h1>Installation  (English version)</h1>
+<ul>
+<li>Clone this repository :
+git clone https://github.com/vypnico974/P14_OpenClassrooms_WealthHealth_V2.git</li>
+<li>Package installations after cloning, npm or yarn :
+<ul>
+<li>with npm : npm i (or npm install)</li>
+<li>with yarn : yarn (or yarn install)</li>
+</ul>
+</li>
+<li>Run the FrontEnd :
+<ul>
+<li>with npm : npm start</li>
+<li>with yarn : yarn start</li>
+</ul>
+</li>
+<li>To create and run a production build :
+<ul>
+<li>with npm :
+<ul>
+<li>npm run build</li>
+<li>npm install -g serve</li>
+<li>serve -s build</li>
+</ul>
+</li>
+<li>with yarn :
+<ul>
+<li>yarn run build</li>
+<li>yarn install -g serve</li>
+<li>serve -s build</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p><img src="https://raw.githubusercontent.com/vypnico974/7697016-Front-End/master/images/create_employee_v2.png" alt="logo"></p>
+<p><img src="https://raw.githubusercontent.com/vypnico974/7697016-Front-End/master/images/list_employee_v2.png" alt="logo"></p></article>
+    </section>
+
+
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#App">App</a></li><li><a href="global.html#CreateEmployeePage">CreateEmployeePage</a></li><li><a href="global.html#CreateForm">CreateForm</a></li><li><a href="global.html#DataTable">DataTable</a></li><li><a href="global.html#Error">Error</a></li><li><a href="global.html#Header">Header</a></li><li><a href="global.html#ListEmployeePage">ListEmployeePage</a></li><li><a href="global.html#Select">Select</a></li><li><a href="global.html#TablePagination">TablePagination</a></li><li><a href="global.html#calculateRange">calculateRange</a></li><li><a href="global.html#employeeSlice">employeeSlice</a></li><li><a href="global.html#getClassNamesFor">getClassNamesFor</a></li><li><a href="global.html#handleSubmit">handleSubmit</a></li><li><a href="global.html#persistedReducer">persistedReducer</a></li><li><a href="global.html#selectDateBirthHandler">selectDateBirthHandler</a></li><li><a href="global.html#selectDateStartHandler">selectDateStartHandler</a></li><li><a href="global.html#sliceData">sliceData</a></li><li><a href="global.html#useSortableData">useSortableData</a></li><li><a href="global.html#useTable">useTable</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.2</a> on Tue Mar 21 2023 18:03:04 GMT+0400 (heure normale de Maurice)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

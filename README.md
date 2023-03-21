@@ -19,7 +19,7 @@ Cette société utilise une application web interne, appelée HRnet, qui gère l
 - Convertir l'un des quatre plugins jQuery actuels en React. Remplacer les 3 plugins jQuery restants par des composants React que tu coderas toi-même, ou que tu peux - - importer depuis des libraires existantes si tu manques de temps. 
 - Effectuer des tests de performance Lighthouse en comparant l'ancienne et la nouvelle application.
 
-Voici le [repo HRnet actuel](https://github.com/OpenClassrooms-Student-Center/P12_Front-end)).
+Voici le [repo HRnet actuel](https://github.com/OpenClassrooms-Student-Center/P12_Front-end).
 N'oublie pas que toute l'application HRNet doit être convertie en React : 
 - Tu devras faire une nouvelle version des pages "Create Employee" et "Employee List" avec React.
 - Tu devras ajouter un système de gestion d'état (la version actuelle utilise un stockage local).
@@ -31,7 +31,7 @@ N'oublie pas que toute l'application HRNet doit être convertie en React :
 
 Nous voulons également mesurer des données quantifiables (ex. : temps de chargement des pages, appels réseau) pour nous assurer que la conversion de l'application à React améliore effectivement les performances. Pour cela, fais bien des audits de performance Lighthouse. Pour comparer, tu devras en faire un pour l'application jQuery HRnet actuelle, puis un autre une fois que l'application et le plugin jQuery choisi seront convertis en React.
 
-Penses bien à faire un build de l'application avant de faire ton audit. Ça impactera grandement les performances de ton application
+Penses bien à faire un build de l'application avant de faire ton audit. Ça impactera grandement les performances de ton application.
 
 ## Solution nr 2
 
@@ -64,7 +64,7 @@ Lien vers le site : [solution nr2](https://vypnico974.github.io/P14_OpenClassroo
 # Installation 
 
 - Cloner ce répertoire :
-    git clone https://github.com/vypnico974/P14_OpenClassrooms_WealthHealth.git
+    git clone https://github.com/vypnico974/P14_OpenClassrooms_WealthHealth_V2.git
 - Après clonage, installatons des dépendances par npm ou yarn :
     - avec npm : npm i (ou npm install)
     - avec yarn :yarn (ou yarn install)
@@ -76,17 +76,17 @@ Lien vers le site : [solution nr2](https://vypnico974.github.io/P14_OpenClassroo
   - avec yarn : yarn run build
 - Excécuter une version de production :
   - avec npm :
-   - npm install -g serve
-   - serve -s build
+    - npm install -g serve
+    - serve -s build
   - avec yarn : 
-   - yarn install -g serve
-   - serve -s build
+    - yarn install -g serve
+    - serve -s build
 
 
 # Installation  (English version)
 
 - Clone this repository :
-    git clone https://github.com/vypnico974/P14_OpenClassrooms_WealthHealth.git
+    git clone https://github.com/vypnico974/P14_OpenClassrooms_WealthHealth_V2.git
 - Package installations after cloning, npm or yarn :
     - with npm : npm i (or npm install)
     - with yarn : yarn (or yarn install)
